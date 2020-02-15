@@ -1,6 +1,10 @@
-<h1>Editing Meeting</h1>
+<div class="row">
+  <div class="col-md-6 ml-auto mr-auto">
+    <h1 class="text-center">Editing Meeting</h1>
 
-<%= render 'form', meeting: @meeting %>
-
-<%= link_to 'Show', @meeting %> |
-<%= link_to 'Back', meetings_path %>
+    <%= render 'form', meeting: @meeting %>
+    
+    <%= link_to 'Show', @meeting %> |
+    <%= link_to '<< Back', meetings_path %>
+  </div>
+</div>

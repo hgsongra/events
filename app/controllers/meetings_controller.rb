@@ -1,10 +1,11 @@
 class MeetingsController < ApplicationController
-  before_action :set_meeting, only: [:show, :edit, :update, :destroy]
+  before_action :set_meeting, only: [:show, :edit, :update, :destroy, :attend, :unattend]
+  before_action :authenticate_user!, except: [:show, :index]
 
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.all
+    @meetings = Meeting.all.order(:created_at)
   end
 
   # GET /meetings/1
@@ -61,6 +62,30 @@ class MeetingsController < ApplicationController
     end
   end
 
+  def attend
+    return redirect_to @meeting, notice: 'Event already complete!.' if @meeting.past?
+    
+    invite = @meeting.invites.new(user: current_user)
+    respond_to do |format|
+      if invite.save
+        format.html { redirect_to @meeting, notice: 'You\'re going to this event!.' }
+        format.json { render :show, status: :created, location: @meeting }
+      else
+        format.html { render :new }
+        format.json { render json: invite.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def unattend
+    return redirect_to @meeting, notice: 'Event already complete!.' if @meeting.past?
+    @meeting.invites.where(user: current_user).destroy_all
+    respond_to do |format|
+      format.html { redirect_to @meeting, notice: 'You widthraw from going to this event!.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_meeting
@@ -71,4 +96,5 @@ class MeetingsController < ApplicationController
     def meeting_params
       params.require(:meeting).permit(:title, :description, :start_at, :end_at)
     end
+
 end

@@ -1,8 +1,7 @@
 <%= form_with(model: meeting, local: true) do |form| %>
   <% if meeting.errors.any? %>
-    <div id="error_explanation">
+    <div class="alert alert-danger">
       <h2><%= pluralize(meeting.errors.count, "error") %> prohibited this meeting from being saved:</h2>
-
       <ul>
         <% meeting.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -11,27 +10,27 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :description %>
-    <%= form.text_area :description %>
+    <%= form.text_area :description, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :start_at %>
-    <%= form.datetime_select :start_at %>
+    <%= form.datetime_select :start_at, class: 'form-control', prompt: true %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :end_at %>
-    <%= form.datetime_select :end_at %>
+    <%= form.datetime_select :end_at, class: 'form-control', prompt: true %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit "Submit", class: "btn btn-primary btn-block btn-lg" %>
   </div>
 <% end %>
