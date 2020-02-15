@@ -23,7 +23,7 @@
     <% end %>
   </tbody>
 </table>
-
+<%= paginate @meetings %>
 <br>
 
 <%= link_to 'New Meeting', new_meeting_path, class: 'btn btn-primary' if user_signed_in? %>

@@ -1,4 +1,7 @@
 class Meeting < ApplicationRecord
+
+  paginates_per 10
+
   validates :title, :description, :start_at, :end_at, presence: true
   has_many :invites
   has_many :users, through: :invites

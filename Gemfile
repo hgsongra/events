@@ -26,6 +26,8 @@ gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem 'sprockets-rails'
 gem 'devise'
+gem 'pg', group: :production
+gem 'kaminari'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
